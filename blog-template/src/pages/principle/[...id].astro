@@ -1,0 +1,41 @@
+---
+import { HeadingMenu } from "@/components/HeadingMenu";
+import Pre from "@/components/Pre.astro";
+import DocsLayout from "@/layouts/DocsLayout.astro";
+import type { GetStaticPaths } from "astro";
+import { render } from "astro:content";
+import { getCollection } from "astro:content";
+
+export const getStaticPaths = (async () => {
+  const principles = await getCollection("principle");
+  return principles.map((item) => {
+    return {
+      params: { id: item.id },
+      props: { principle: item },
+    };
+  });
+}) satisfies GetStaticPaths;
+
+const { principle } = Astro.props;
+
+const { Content, remarkPluginFrontmatter, headings } = await render(principle);
+---
+
+<DocsLayout>
+  <div class="flex items-start">
+    <div
+      class="pl-6 pr-6 prose prose-sm md:prose-base max-w-none flex-1 pt-10 pb-10 overflow-hidden"
+    >
+      <Content
+        components={{
+          pre: Pre,
+        }}
+      />
+    </div>
+    <HeadingMenu
+      readingTime={remarkPluginFrontmatter.readingTime}
+      headingData={headings}
+      client:load
+    />
+  </div>
+</DocsLayout>

@@ -1,0 +1,44 @@
+---
+import { HeadingMenu } from "@/components/HeadingMenu";
+import Pre from "@/components/Pre.astro";
+import DocsLayout from "@/layouts/DocsLayout.astro";
+import type { GetStaticPaths } from "astro";
+import { Image } from "astro:assets";
+import { render } from "astro:content";
+import { getCollection } from "astro:content";
+
+export const getStaticPaths = (async () => {
+  const examples = await getCollection("example");
+  return examples.map((item) => {
+    return {
+      params: { id: item.id },
+      props: { example: item },
+    };
+  });
+}) satisfies GetStaticPaths;
+
+const { example } = Astro.props;
+
+const { Content, headings, remarkPluginFrontmatter } = await render(example);
+---
+
+<DocsLayout>
+  <div class="flex items-start">
+    <div
+      class="pl-6 pr-6 prose prose-sm md:prose-base max-w-none flex-1 pt-10 pb-10 overflow-hidden"
+    >
+      <Content
+        components={{
+          pre: Pre,
+        }}
+      />
+      <p>运行结果如下：</p>
+      <img src={example.data.image.src} alt={example.data.title} />
+    </div>
+    <HeadingMenu
+      readingTime={remarkPluginFrontmatter.readingTime}
+      headingData={headings}
+      client:load
+    />
+  </div>
+</DocsLayout>

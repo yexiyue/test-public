@@ -1,0 +1,30 @@
+---
+import "@/styles/global.css";
+import { ClientRouter } from "astro:transitions";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="/ratatui-kit-website/favicon.svg"
+    />
+    <meta name="generator" content={Astro.generator} />
+    <title>Ratatui Kit</title>
+    <!-- 支持 mermaid -->
+    <script is:inline transition:persist type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.8/+esm";
+      document.addEventListener("astro:after-swap", () => {
+        mermaid.run();
+      });
+    </script>
+    <ClientRouter />
+  </head>
+  <body class="overflow-hidden bg-base-200">
+    <slot />
+  </body>
+</html>

@@ -1,0 +1,80 @@
+---
+const features = [
+  {
+    title: "Component",
+    description:
+      "Ratatui Kit 采用组件化设计，允许你像使用 React 一样构建终端应用。",
+    href: "/ratatui-kit-website/docs/component",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-blocks-icon lucide-blocks"><path d="M10 22V7a1 1 0 0 0-1-1H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5a1 1 0 0 0-1-1H2"/><rect x="14" y="2" width="8" height="8" rx="1"/></svg>`,
+  },
+  {
+    title: "Hooks",
+    description:
+      "Ratatui Kit 提供了丰富的 Hooks，用于处理终端应用中的常见场景。",
+    href: "/ratatui-kit-website/docs/hooks",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-combine-icon lucide-combine"><path d="M10 18H5a3 3 0 0 1-3-3v-1"/><path d="M14 2a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2"/><path d="M20 2a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2"/><path d="m7 21 3-3-3-3"/><rect x="14" y="14" width="8" height="8" rx="2"/><rect x="2" y="2" width="8" height="8" rx="2"/></svg>`,
+  },
+  {
+    title: "Router",
+    description: "Ratatui Kit 提供了路由系统，用于管理终端应用的页面。",
+    href: "/ratatui-kit-website/docs/router",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-router-icon lucide-router"><rect width="20" height="8" x="2" y="14" rx="2"/><path d="M6.01 18H6"/><path d="M10.01 18H10"/><path d="M15 10v4"/><path d="M17.84 7.17a4 4 0 0 0-5.66 0"/><path d="M20.66 4.34a8 8 0 0 0-11.31 0"/></svg>`,
+  },
+  {
+    title: "Store",
+    description: "Ratatui Kit 提供了 Store，用于管理终端应用的状态。",
+    href: "/ratatui-kit-website/docs/global-store",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-database-zap-icon lucide-database-zap"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 15 21.84"/><path d="M21 5V8"/><path d="M21 12L18 17H22L19 22"/><path d="M3 12A9 3 0 0 0 14.59 14.87"/></svg>`,
+  },
+];
+---
+
+<div class="flex justify-center items-center w-full h-full">
+  <div
+    class="w-2xs md:w-md lg:w-lg font-thin lg:font-normal flex flex-col items-center"
+  >
+    <p class="font-black text-center text-xl lg:text-3xl">
+      更高效、更清洁、更简单的
+    </p>
+    <p class="text-center text-xl lg:text-3xl">Ratatui 终端开发</p>
+    <p class="text-center mt-4 lg:mt-8 lg:text-xl">
+      Ratatui Kit 一定会是你喜欢的 Rust 终端 UI 框架<br />
+      它融合了 React的组件化理念<br />
+      让你像写前端一样高效、灵活地构建可维护的终端界面
+    </p>
+    <a
+      href="/ratatui-kit-website/docs/quick-start"
+      class="btn btn-neutral shadow rounded-2xl lg:rounded-3xl btn-sm lg:btn-md w-[168px] lg:w-3xs mt-6 lg:mt-10"
+      >查看文档</a
+    >
+  </div>
+</div>
+<div class="flex flex-col justify-center items-center w-[80%] m-auto p-4 py-20">
+  <p class="lg:text-xl text-center">
+    构建灵活，高效且易于扩展的终端应用程序，停止重新发明轮子
+  </p>
+  <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 my-20">
+    {
+      features.map((feature) => {
+        return (
+          <div class="card card-border border-base-300 shadow-lg bg-base-100">
+            <div class="card-body flex items-center flex-col gap-4">
+              <h2 class="card-title">{feature.title}</h2>
+              <div
+                class="h-8 w-8 flex justify-center items-center text-info"
+                set:html={feature.icon}
+              />
+              <p class="text-center">{feature.description}</p>
+              <a
+                href={feature.href}
+                class="btn btn-neutral w-[100px] rounded-2xl btn-sm"
+              >
+                查看文档
+              </a>
+            </div>
+          </div>
+        );
+      })
+    }
+  </div>
+</div>

@@ -1,0 +1,58 @@
+---
+import { getCollection } from "astro:content";
+import { type MenuItem, Menu } from "./Menu";
+
+const principles = (await getCollection("principle")).sort((a, b) => {
+  return a.data.pubDate < b.data.pubDate ? -1 : 1;
+});
+
+const examples = (await getCollection("example")).sort((a, b) => {
+  return a.data.index < b.data.index ? -1 : 1;
+});
+
+const docs = (await getCollection("docs")).sort((a, b) => {
+  return a.data.index < b.data.index ? -1 : 1;
+});
+
+const pathname = decodeURI(Astro.url.pathname);
+
+let selectedKey = pathname;
+
+if (selectedKey.endsWith("/")) {
+  selectedKey = selectedKey.slice(0, -1);
+}
+
+const menus: MenuItem[] = [
+  {
+    title: "文档",
+    url: "/ratatui-kit-website",
+    children: docs.map((item) => ({
+      title: item.data.title,
+      url: `/ratatui-kit-website/docs/${item.id}`,
+    })),
+  },
+  {
+    title: "示例",
+    url: "/ratatui-kit-website/example",
+    children: [
+      { title: "示例", url: "/ratatui-kit-website/example" },
+      ...examples.map((item) => ({
+        title: item.data.title,
+        url: `/ratatui-kit-website/example/${item.id}`,
+      })),
+    ],
+  },
+  {
+    title: "原理",
+    url: "/ratatui-kit-website/principle",
+    children: principles.map((item) => ({
+      title: item.data.title,
+      url: `/ratatui-kit-website/principle/${decodeURI(item.id)}`,
+    })),
+  },
+];
+---
+
+<div class="bg-base-200 pb-8">
+  <Menu menu={menus} selectedKey={selectedKey} transition:persist client:load />
+</div>

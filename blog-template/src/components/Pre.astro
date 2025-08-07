@@ -1,0 +1,45 @@
+---
+import { Copy } from "lucide-react";
+
+const props = Astro.props;
+---
+
+<div class="group relative">
+  <pre {...props}>
+    <slot />
+  </pre>
+  <div
+    class="absolute right-2 top-2 hidden group-hover:flex tooltip-left tooltip tooltip-info"
+  >
+    <button class="btn btn-sm btn-ghost btn-square copy-code">
+      <Copy className="w-4 h-4" />
+    </button>
+  </div>
+</div>
+
+<script is:inline>
+  const buttons = document.querySelectorAll("button.copy-code");
+
+  buttons.forEach((button) => {
+    const block = button.parentElement.parentNode;
+    button.addEventListener("click", () => {
+      copyCode(block, button);
+    });
+  });
+
+  async function copyCode(block, button) {
+    let code = block.querySelector("code");
+    let text = code?.innerText;
+
+    await navigator.clipboard.writeText(text);
+    button.classList.add("btn-info");
+    button.parentElement.dataset.tip = "复制成功";
+    button.parentElement.classList.add("tooltip-open");
+
+    setTimeout(() => {
+      button.classList.remove("btn-info");
+      button.parentElement.classList.remove("tooltip-open");
+      delete button.parentElement.dataset.tip;
+    }, 700);
+  }
+</script>

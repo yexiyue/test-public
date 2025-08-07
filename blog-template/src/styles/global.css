@@ -1,0 +1,101 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@plugin "daisyui";
+
+/* prose */
+
+.prose {
+  @media (min-width: 64rem) {
+    padding-inline-start: 2rem;
+  }
+
+  :where(blockquote p:first-of-type):not(
+      :where([class~="not-prose"], [class~="not-prose"] *)
+    ) {
+    &:before,
+    &:after {
+      content: none;
+    }
+  }
+
+  p > code {
+    @apply badge badge-outline badge-secondary badge-xs md:badge-sm;
+  }
+
+  a > code {
+    @apply badge badge-outline badge-info badge-xs md:badge-sm;
+  }
+
+  blockquote {
+    @apply alert alert-info not-italic items-start leading-loose *:m-0!;
+  }
+}
+
+:root[data-theme="dark"] {
+  .astro-code,
+  .astro-code span {
+    color: var(--shiki-dark) !important;
+    background-color: var(--shiki-dark-bg) !important;
+
+    font-style: var(--shiki-dark-font-style) !important;
+    font-weight: var(--shiki-dark-font-weight) !important;
+    text-decoration: var(--shiki-dark-text-decoration) !important;
+  }
+}
+
+.astro-code {
+  @apply border border-base-300 bg-base-100! flex!;
+}
+
+svg[id^="mermaid"] {
+  margin: 0 auto;
+  @apply w-full bg-base-100 border border-base-300 rounded-lg;
+}
+
+.mermaid {
+  @apply bg-base-200;
+}
+
+.anchor {
+  position: relative;
+}
+
+.link-anchor {
+  position: absolute;
+  top: 50%;
+  left: -28px;
+  display: flex;
+  width: 28px;
+  height: 28px;
+  margin: auto;
+  opacity: 0;
+  justify-content: center;
+  align-items: center;
+  transform: translateY(-50%);
+  border: none;
+  @apply fill-base-content;
+}
+
+.anchor:hover .link-anchor {
+  opacity: 1;
+}
+
+.flowchart {
+  .nodeLabel,
+  .edgeLabel {
+    @apply text-base-content!;
+  }
+
+  .label-container {
+    @apply fill-base-200! stroke-primary-content!;
+  }
+
+  .flowchart-link {
+    @apply stroke-base-content!;
+  }
+
+  .label-container,
+  .labelBkg {
+    @apply bg-base-100!;
+  }
+}

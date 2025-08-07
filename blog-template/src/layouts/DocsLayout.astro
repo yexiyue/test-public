@@ -1,0 +1,92 @@
+---
+import { AlignJustify, Github } from "lucide-react";
+import Layout from "./Layout.astro";
+import SliderMenu from "@/components/SliderMenu.astro";
+import ThemeButton from "@/components/ThemeButton";
+import { DocsSearch } from "@/components/Search";
+
+interface Props {
+  index?: boolean;
+}
+const { index = false } = Astro.props;
+---
+
+<Layout>
+  <div
+    class:list={[
+      "drawer overflow-hidden",
+      {
+        "lg:drawer-open": !index,
+      },
+    ]}
+  >
+    <input id="docs-drawer" type="checkbox" class="drawer-toggle" />
+    <div class="drawer-content h-screen w-full flex flex-col overflow-hidden">
+      <!-- Navbar -->
+      <div class="navbar bg-base-200 w-full z-10">
+        <div
+          class:list={[
+            "flex-none",
+            {
+              "lg:hidden": !index,
+            },
+          ]}
+        >
+          <label
+            for="docs-drawer"
+            aria-label="open sidebar"
+            class="btn btn-square btn-ghost btn-sm btn-primary"
+          >
+            <AlignJustify size={18} />
+          </label>
+        </div>
+        <div
+          class:list={[
+            "mx-2 flex-1 px-2 cursor-pointer",
+            {
+              "lg:hidden": !index,
+            },
+          ]}
+        >
+          <a href="/ratatui-kit-website" class="text-nowrap">Ratatui Kit</a>
+        </div>
+        <div class="hidden md:flex w-xs">
+          <DocsSearch client:load transition:persist />
+        </div>
+        <div class="flex-1"></div>
+        <div class="navbar-end flex gap-2">
+          <a
+            href="https://github.com/yexiyue/ratatui-kit"
+            target="_blank"
+            class="btn btn-circle btn-ghost btn-primary btn-sm"
+          >
+            <Github size={20} />
+          </a>
+          <ThemeButton client:load transition:persist />
+        </div>
+      </div>
+      <!-- Page content here -->
+      <div class="flex-1 overflow-hidden">
+        <div class="h-full overflow-y-auto">
+          <slot />
+        </div>
+      </div>
+    </div>
+
+    <div class="drawer-side z-40">
+      <label for="docs-drawer" aria-label="close sidebar" class="drawer-overlay"
+      ></label>
+      <div class="h-full bg-base-200">
+        <div
+          class="p-4 text-center h-16 cursor-pointer sticky top-0 bg-base-200 z-10 hidden lg:block"
+        >
+          <a href="/ratatui-kit-website">Ratatui Kit</a>
+        </div>
+        <div class="md:hidden w-[200px] m-auto mt-4">
+          <DocsSearch client:load transition:persist />
+        </div>
+        <SliderMenu />
+      </div>
+    </div>
+  </div>
+</Layout>
